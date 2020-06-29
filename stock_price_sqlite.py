@@ -17,7 +17,8 @@ def generate_price_from_csv_file(csv_file_name,code):
             l = float(row[3])
             c = float(row[4])
             v = int(row[5])
-            tuple =  code,d,o,h,l,c,v
+            f_c = float(row[6])
+            tuple =  code,d,o,h,l,c,v,f_c
             insert_price(tuple)
 
 def generate_from_csv_dir(csv_dir):
@@ -39,11 +40,11 @@ def insert_price(tuple):
     conn = sqlite3.connect("kabutan.db")
 
     with conn:
-        sql = 'INSERT INTO raw_prices(code,date,open,high,low,close,volume) ' \
-              'VALUES(?,?,?,?,?,?,?)'
+        sql = 'INSERT INTO raw_prices_new(code,date,open,high,low,close,volume,fix_close) ' \
+              'VALUES(?,?,?,?,?,?,?,?)'
 
         try:
-           conn.execute(sql,tuple)
+          conn.execute(sql,tuple)
 
         except sqlite3.Error as e:
             print(tuple)
